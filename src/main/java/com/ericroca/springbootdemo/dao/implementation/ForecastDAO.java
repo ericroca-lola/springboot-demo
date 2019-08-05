@@ -23,6 +23,19 @@ public class ForecastDAO implements IForecastDAO {
     }
 
     @Override
+    public void addForecast(Forecast forecast) {
+        String sql = "INSERT INTO forecast (startDate, startTime, endDate, endTime, averageTemperature) values (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, forecast.getStartDate(), forecast.getStartTime(),
+                forecast.getEndDate(), forecast.getEndTime(), forecast.getAverageTemperature());
+
+        sql = "SELECT id FROM forecast WHERE startDate = ? and startTime = ? and endDate = ? and endTime = ?";
+        int id = jdbcTemplate.queryForObject(sql, Integer.class, forecast.getStartDate(), forecast.getStartTime(),
+                forecast.getEndDate(), forecast.getEndTime());
+
+        forecast.setId(id);
+    }
+
+    @Override
     public List<Forecast> getAllForecasts() {
         String sql = "SELECT id, startDate, startTime, endDate, endTime, averageTemperature FROM forecast";
         RowMapper<Forecast> rowMapper = new BeanPropertyRowMapper<>(Forecast.class);

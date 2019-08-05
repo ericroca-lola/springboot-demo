@@ -1,18 +1,27 @@
 package com.ericroca.springbootdemo.model;
 
-import java.sql.Time;
-import java.sql.Date;
-
 public class Forecast {
     private int id;
-    private Date startDate;
-    private Time startTime;
-    private Date endDate;
-    private Time endTime;
+    private String startDate;
+    private String startTime;
+    private String endDate;
+    private String endTime;
     private float averageTemperature;
 
-    public Forecast(int id, Date startDate, Time startTime, Date endDate, Time endTime, float averageTemperature) {
+    public Forecast() {
+    }
+
+    public Forecast(int id, String startDate, String startTime, String endDate, String endTime, float averageTemperature) {
         this.id = id;
+        this.startDate = startDate;
+        this.startTime = startTime;
+        this.endDate = endDate;
+        this.endTime = endTime;
+        this.averageTemperature = averageTemperature;
+    }
+
+    public Forecast(String startDate, String startTime, String endDate, String endTime, float averageTemperature) {
+        this.id = -1;
         this.startDate = startDate;
         this.startTime = startTime;
         this.endDate = endDate;
@@ -28,35 +37,35 @@ public class Forecast {
         this.id = id;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-    public Time getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

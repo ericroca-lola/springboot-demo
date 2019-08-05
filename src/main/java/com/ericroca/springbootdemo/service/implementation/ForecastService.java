@@ -15,6 +15,11 @@ public class ForecastService implements IForecastService {
     private IForecastDAO forecastDAO;
 
     @Override
+    public synchronized void addForecast(Forecast forecast) {
+        forecastDAO.addForecast(forecast);
+    }
+
+    @Override
     public List<Forecast> getAllForecasts() {
         return forecastDAO.getAllForecasts();
     }

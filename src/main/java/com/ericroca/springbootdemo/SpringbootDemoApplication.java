@@ -118,6 +118,7 @@ public class SpringbootDemoApplication {
 		JsonNode listNode = new ObjectMapper().readTree(response).get("list");
 
 		System.out.println(listNode.get(0).get("main").get("temp").toString());
+		System.out.println(listNode.size());
 //		JsonParser springParser = JsonParserFactory.getJsonParser();
 //		Map<String, Object> map = springParser.parseMap(response);
 //

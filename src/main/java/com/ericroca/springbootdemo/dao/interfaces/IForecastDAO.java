@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IForecastDAO {
 
+    void addForecast(Forecast forecast);
+
     List<Forecast> getAllForecasts();
 }

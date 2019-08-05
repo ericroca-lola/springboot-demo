@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IForecastService {
 
+    void addForecast(Forecast forecast);
+
     List<Forecast> getAllForecasts();
 }
