@@ -5,15 +5,19 @@ import java.sql.Date;
 
 public class Forecast {
     private int id;
-    private Date day;
-    private Time hour;
-    private float temperature;
+    private Date startDate;
+    private Time startTime;
+    private Date endDate;
+    private Time endTime;
+    private float averageTemperature;
 
-    public Forecast(int id, Date day, Time hour, float temperature) {
+    public Forecast(int id, Date startDate, Time startTime, Date endDate, Time endTime, float averageTemperature) {
         this.id = id;
-        this.day = day;
-        this.hour = hour;
-        this.temperature = temperature;
+        this.startDate = startDate;
+        this.startTime = startTime;
+        this.endDate = endDate;
+        this.endTime = endTime;
+        this.averageTemperature = averageTemperature;
     }
 
     public int getId() {
@@ -24,27 +28,43 @@ public class Forecast {
         this.id = id;
     }
 
-    public Date getDay() {
-        return day;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setDay(Date day) {
-        this.day = day;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Time getHour() {
-        return hour;
+    public Time getStartTime() {
+        return startTime;
     }
 
-    public void setHour(Time hour) {
-        this.hour = hour;
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
     }
 
-    public float getTemperature() {
-        return temperature;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setTemperature(float temperature) {
-        this.temperature = temperature;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
+    }
+
+    public float getAverageTemperature() {
+        return averageTemperature;
+    }
+
+    public void setAverageTemperature(float averageTemperature) {
+        this.averageTemperature = averageTemperature;
     }
 }

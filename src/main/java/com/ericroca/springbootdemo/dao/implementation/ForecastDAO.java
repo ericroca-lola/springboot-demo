@@ -24,7 +24,7 @@ public class ForecastDAO implements IForecastDAO {
 
     @Override
     public List<Forecast> getAllForecasts() {
-        String sql = "SELECT id, day, hour, temperature FROM forecast";
+        String sql = "SELECT id, startDate, startTime, endDate, endTime, averageTemperature FROM forecast";
         RowMapper<Forecast> rowMapper = new BeanPropertyRowMapper<>(Forecast.class);
         return this.jdbcTemplate.query(sql, rowMapper);
     }
