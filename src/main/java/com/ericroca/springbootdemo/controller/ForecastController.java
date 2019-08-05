@@ -27,32 +27,19 @@ public class ForecastController {
     private IForecastService forecastService;
 
     @GetMapping("fetch")
-    public ResponseEntity<String> fetch() throws IOException, ParseException {
+    public ResponseEntity<String> fetch() throws IOException {
         String url = "http://api.openweathermap.org/data/2.5/forecast?id=681290&APPID=71ef08b523a231385d9b8083d2e2ec3d";
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(url, String.class);
 
         JsonNode listNode = new ObjectMapper().readTree(response).get("list");
 
-        float averageTemperature = 0;
-        for (int i = 0; i < listNode.size(); ++i) {
-            averageTemperature += listNode.get(i).get("main").get("temp").floatValue();
-        }
-        averageTemperature = (float) ((averageTemperature / listNode.size()) - 273.15);
+        float averageTemperature = forecastService.calculateAverageTemperature(listNode);
 
-        Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                .parse(listNode.get(0).get("dt_txt").asText());
-        String startDate = new SimpleDateFormat("yyyy-MM-dd").format(start);
-        String startTime = new SimpleDateFormat("HH:mm:ss").format(start);
+        List<String> dateTime = forecastService.parseDate(listNode);
 
-        Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                .parse(listNode.get(listNode.size() - 1).get("dt_txt").asText());
-        String endDate = new SimpleDateFormat("yyyy-MM-dd").format(end);
-        String endTime = new SimpleDateFormat("HH:mm:ss").format(end);
-
-        Forecast forecast = new Forecast(startDate, startTime, endDate, endTime, averageTemperature);
-
-        forecastService.addForecast(forecast);
+        forecastService.addForecast(dateTime.get(0), dateTime.get(1), dateTime.get(2), dateTime.get(3),
+                averageTemperature);
 
         return new ResponseEntity<>("Fetched from API!", HttpStatus.OK);
     }
