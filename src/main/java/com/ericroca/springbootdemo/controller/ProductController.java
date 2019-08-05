@@ -1,5 +1,7 @@
-package com.ericroca.springbootdemo;
+package com.ericroca.springbootdemo.controller;
 
+import com.ericroca.springbootdemo.model.Product;
+import com.ericroca.springbootdemo.service.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

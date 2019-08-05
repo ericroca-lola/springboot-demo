@@ -1,4 +1,4 @@
-package com.ericroca.springbootdemo;
+package com.ericroca.springbootdemo.model;
 
 public class Product {
 

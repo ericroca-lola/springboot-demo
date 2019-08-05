@@ -1,5 +1,6 @@
-package com.ericroca.springbootdemo;
+package com.ericroca.springbootdemo.mapper;
 
+import com.ericroca.springbootdemo.model.Product;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

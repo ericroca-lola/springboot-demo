@@ -1,5 +1,7 @@
-package com.ericroca.springbootdemo;
+package com.ericroca.springbootdemo.dao.implementation;
 
+import com.ericroca.springbootdemo.dao.interfaces.IForecastDAO;
+import com.ericroca.springbootdemo.model.Forecast;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,19 +13,19 @@ import java.util.List;
 
 @Transactional
 @Repository
-public class ProductDAO implements IProductDAO {
+public class ForecastDAO implements IForecastDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public ProductDAO(JdbcTemplate jdbcTemplate) {
+    public ForecastDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        String sql = "SELECT ID, PRODUCT_NAME FROM PRODUCT";
-        RowMapper<Product> rowMapper = new ProductRowMapper();
+    public List<Forecast> getAllForecasts() {
+        String sql = "SELECT id, day, hour, temperature FROM forecast";
+        RowMapper<Forecast> rowMapper = new BeanPropertyRowMapper<>(Forecast.class);
         return this.jdbcTemplate.query(sql, rowMapper);
     }
 }
