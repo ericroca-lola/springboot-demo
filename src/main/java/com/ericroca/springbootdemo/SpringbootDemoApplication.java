@@ -1,13 +1,18 @@
 package com.ericroca.springbootdemo;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.json.JsonParser;
+import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +20,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import static org.apache.http.HttpHeaders.USER_AGENT;
 
@@ -81,6 +87,7 @@ public class SpringbootDemoApplication {
 		StringBuffer result = new StringBuffer();
 		try {
 			URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?id=681290&APPID=71ef08b523a231385d9b8083d2e2ec3d");
+
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
@@ -100,5 +107,31 @@ public class SpringbootDemoApplication {
 			e.printStackTrace();
 		}
 		return String.valueOf(result);
+	}
+
+	@RequestMapping(value = "/jsonfetch")
+	public void jsonFetch() throws IOException {
+		String url = "http://api.openweathermap.org/data/2.5/forecast?id=681290&APPID=71ef08b523a231385d9b8083d2e2ec3d";
+		RestTemplate restTemplate = new RestTemplate();
+		String response = restTemplate.getForObject(url, String.class);
+
+		JsonNode listNode = new ObjectMapper().readTree(response).get("list");
+
+		System.out.println(listNode.get(0).get("main").get("temp").toString());
+//		JsonParser springParser = JsonParserFactory.getJsonParser();
+//		Map<String, Object> map = springParser.parseMap(response);
+//
+//		String mapArray[] = new String[map.size()];
+//		System.out.println("Items found: " + mapArray.length);
+//
+//		for (Map.Entry<String, Object> entry : map.entrySet()) {
+//			System.out.println(entry.getKey() + " = " + entry.getValue());
+//			if (entry.getKey().equals("list")) {
+//				ObjectMapper objectMapper = new ObjectMapper();
+//				JsonNode rootNode = (JsonNode) entry.getValue();
+//
+//				System.out.println(rootNode.path("dt").asText());
+//			}
+//		}
 	}
 }
