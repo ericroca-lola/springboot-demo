@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface IForecastService {
 
-    void addForecast(Forecast forecast);
+    Forecast addForecast(Forecast forecast);
 
-    void addForecast(String startDate, String startTime, String endDate, String endTime, float averageTemperature);
+    Forecast addForecast(String startDate, String startTime, String endDate, String endTime, float averageTemperature);
 
     List<Forecast> getAllForecasts();
 

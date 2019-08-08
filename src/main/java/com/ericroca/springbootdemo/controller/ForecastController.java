@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -23,7 +24,7 @@ public class ForecastController {
     private IForecastService forecastService;
 
     @GetMapping("fetch")
-    public ResponseEntity<String> fetch() throws IOException {
+    public ResponseEntity<List<Forecast>> fetch() throws IOException {
         String url = "http://api.openweathermap.org/data/2.5/forecast?id=681290&APPID=71ef08b523a231385d9b8083d2e2ec3d";
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(url, String.class);
@@ -34,10 +35,10 @@ public class ForecastController {
 
         List<String> dateTime = forecastService.parseDate(response);
 
-        forecastService.addForecast(dateTime.get(0), dateTime.get(1), dateTime.get(2), dateTime.get(3),
+        Forecast forecast = forecastService.addForecast(dateTime.get(0), dateTime.get(1), dateTime.get(2), dateTime.get(3),
                 averageTemperature);
 
-        return new ResponseEntity<>("Fetched from API!", HttpStatus.OK);
+        return new ResponseEntity<>(Arrays.asList(forecast), HttpStatus.OK);
     }
 
     @GetMapping("list")

@@ -7,17 +7,13 @@ import com.ericroca.springbootdemo.model.elements.ListElement;
 import com.ericroca.springbootdemo.model.elements.MainElement;
 import com.ericroca.springbootdemo.service.interfaces.IForecastService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,16 +23,16 @@ public class ForecastService implements IForecastService {
     private IForecastDAO forecastDAO;
 
     @Override
-    public synchronized void addForecast(Forecast forecast) {
-        forecastDAO.addForecast(forecast);
+    public synchronized Forecast addForecast(Forecast forecast) {
+        return forecastDAO.addForecast(forecast);
     }
 
     @Override
-    public synchronized void addForecast(String startDate, String startTime,
+    public synchronized Forecast addForecast(String startDate, String startTime,
                                          String endDate, String endTime, float averageTemperature) {
 
         Forecast forecast = new Forecast(startDate, startTime, endDate, endTime, averageTemperature);
-        forecastDAO.addForecast(forecast);
+        return forecastDAO.addForecast(forecast);
     }
 
     @Override
@@ -73,15 +69,6 @@ public class ForecastService implements IForecastService {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
         try {
-//            Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//                    .parse(listNode.get(0).get("dt_txt").asText());
-//            dateTime.add(new SimpleDateFormat("yyyy-MM-dd").format(start));
-//            dateTime.add(new SimpleDateFormat("HH:mm:ss").format(start));
-//
-//            Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//                    .parse(listNode.get(listNode.size() - 1).get("dt_txt").asText());
-//            dateTime.add(new SimpleDateFormat("yyyy-MM-dd").format(end));
-//            dateTime.add(new SimpleDateFormat("HH:mm:ss").format(end));
             Response response = mapper.readValue(jsonData, Response.class);
             List<ListElement> listElements = response.getList();
             LocalDateTime start = listElements.get(0).getDtTxt();

@@ -23,7 +23,7 @@ public class ForecastDAO implements IForecastDAO {
     }
 
     @Override
-    public void addForecast(Forecast forecast) {
+    public Forecast addForecast(Forecast forecast) {
         String sql = "INSERT INTO forecast (startDate, startTime, endDate, endTime, averageTemperature) values (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, forecast.getStartDate(), forecast.getStartTime(),
                 forecast.getEndDate(), forecast.getEndTime(), forecast.getAverageTemperature());
@@ -33,6 +33,7 @@ public class ForecastDAO implements IForecastDAO {
                 forecast.getEndDate(), forecast.getEndTime());
 
         forecast.setId(id);
+        return forecast;
     }
 
     @Override
