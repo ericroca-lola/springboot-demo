@@ -15,5 +15,5 @@ public interface IForecastService {
 
     float calculateAverageTemperature(String jsonData);
 
-    List<String> parseDate(JsonNode listNode);
+    List<String> parseDate(String jsonData);
 }

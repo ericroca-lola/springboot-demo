@@ -32,7 +32,7 @@ public class ForecastController {
 
         float averageTemperature = forecastService.calculateAverageTemperature(response);
 
-        List<String> dateTime = forecastService.parseDate(listNode);
+        List<String> dateTime = forecastService.parseDate(response);
 
         forecastService.addForecast(dateTime.get(0), dateTime.get(1), dateTime.get(2), dateTime.get(3),
                 averageTemperature);

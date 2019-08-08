@@ -1,7 +1,13 @@
 package com.ericroca.springbootdemo.model.elements;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ListElement {
@@ -20,14 +26,17 @@ public class ListElement {
     private RainElement rain;
     @JsonProperty("sys")
     private SysElement sys;
-    @JsonProperty("dt_txt")
-    private String dtTxt;
+    @JsonProperty(value = "dt_txt")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime dtTxt;
 
     public ListElement() {
     }
 
     public ListElement(long dt, MainElement main, List<WeatherElement> weather, CloudElement clouds, WindElement wind,
-                       RainElement rain, SysElement sys, String dtTxt) {
+                       RainElement rain, SysElement sys, LocalDateTime dtTxt) {
         this.dt = dt;
         this.main = main;
         this.weather = weather;
@@ -94,11 +103,11 @@ public class ListElement {
         this.sys = sys;
     }
 
-    public String getDtTxt() {
+    public LocalDateTime getDtTxt() {
         return dtTxt;
     }
 
-    public void setDtTxt(String dtTxt) {
+    public void setDtTxt(LocalDateTime dtTxt) {
         this.dtTxt = dtTxt;
     }
 }
