@@ -30,7 +30,7 @@ public class ForecastController {
 
         JsonNode listNode = new ObjectMapper().readTree(response).get("list");
 
-        float averageTemperature = forecastService.calculateAverageTemperature(listNode);
+        float averageTemperature = forecastService.calculateAverageTemperature(response);
 
         List<String> dateTime = forecastService.parseDate(listNode);
 

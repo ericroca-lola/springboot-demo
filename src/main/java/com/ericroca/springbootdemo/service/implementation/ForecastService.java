@@ -2,8 +2,12 @@ package com.ericroca.springbootdemo.service.implementation;
 
 import com.ericroca.springbootdemo.dao.interfaces.IForecastDAO;
 import com.ericroca.springbootdemo.model.Forecast;
+import com.ericroca.springbootdemo.model.Response;
+import com.ericroca.springbootdemo.model.elements.ListElement;
+import com.ericroca.springbootdemo.model.elements.MainElement;
 import com.ericroca.springbootdemo.service.interfaces.IForecastService;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,13 +43,26 @@ public class ForecastService implements IForecastService {
     }
 
     @Override
-    public float calculateAverageTemperature(JsonNode listNode) {
+    public float calculateAverageTemperature(String jsonData) {
+        ObjectMapper mapper = new ObjectMapper();
         float averageTemperature = 0;
-        for (int i = 0; i < listNode.size(); ++i) {
-            averageTemperature += listNode.get(i).get("main").get("temp").floatValue();
+        try {
+            Response response = mapper.readValue(jsonData, Response.class);
+            List<ListElement> listElements = response.getList();
+            for (ListElement listElement : listElements) {
+                MainElement mainElement = listElement.getMain();
+                averageTemperature += mainElement.getTemp();
+            }
+            averageTemperature /= response.getCnt();
+            averageTemperature = convertKelvinToCelsius(averageTemperature);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        averageTemperature = (float) ((averageTemperature / listNode.size()) - 273.15);
         return averageTemperature;
+    }
+
+    private float convertKelvinToCelsius(float value) {
+        return (float) (value - 273.15);
     }
 
     @Override

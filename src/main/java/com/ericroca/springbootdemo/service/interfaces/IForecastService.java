@@ -13,7 +13,7 @@ public interface IForecastService {
 
     List<Forecast> getAllForecasts();
 
-    float calculateAverageTemperature(JsonNode temperatureNode);
+    float calculateAverageTemperature(String jsonData);
 
     List<String> parseDate(JsonNode listNode);
 }

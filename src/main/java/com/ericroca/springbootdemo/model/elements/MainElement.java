@@ -2,7 +2,7 @@ package com.ericroca.springbootdemo.model.elements;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-class MainElement {
+public class MainElement {
 
     @JsonProperty("temp")
     private double temp;
@@ -14,11 +14,11 @@ class MainElement {
     private double pressure;
     @JsonProperty("sea_level")
     private double seaLevel;
-    @JsonProperty("grndLevel")
+    @JsonProperty("grnd_level")
     private double grndLevel;
     @JsonProperty("humidity")
     private int humidity;
-    @JsonProperty("tempKf")
+    @JsonProperty("temp_kf")
     private double tempKf;
 
     public MainElement() {

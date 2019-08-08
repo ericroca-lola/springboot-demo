@@ -1,11 +1,12 @@
 package com.ericroca.springbootdemo.model;
 
+import com.ericroca.springbootdemo.model.elements.CityElement;
 import com.ericroca.springbootdemo.model.elements.ListElement;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-class Response {
+public class Response {
 
     @JsonProperty("cod")
     private String cod;
@@ -15,15 +16,18 @@ class Response {
     private int cnt;
     @JsonProperty("list")
     private List<ListElement> list;
+    @JsonProperty("city")
+    private CityElement city;
 
     public Response() {
     }
 
-    public Response(String cod, double message, int cnt, List<ListElement> list) {
+    public Response(String cod, double message, int cnt, List<ListElement> list, CityElement city) {
         this.cod = cod;
         this.message = message;
         this.cnt = cnt;
         this.list = list;
+        this.city = city;
     }
 
     public String getCod() {
@@ -56,5 +60,13 @@ class Response {
 
     public void setList(List<ListElement> list) {
         this.list = list;
+    }
+
+    public CityElement getCity() {
+        return city;
+    }
+
+    public void setCity(CityElement city) {
+        this.city = city;
     }
 }
