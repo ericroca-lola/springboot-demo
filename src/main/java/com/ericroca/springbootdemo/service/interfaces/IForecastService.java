@@ -3,6 +3,7 @@ package com.ericroca.springbootdemo.service.interfaces;
 import com.ericroca.springbootdemo.model.Forecast;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IForecastService {
@@ -15,5 +16,5 @@ public interface IForecastService {
 
     float calculateAverageTemperature(String jsonData);
 
-    List<String> parseDate(String jsonData);
+    List<String> parseDate(String jsonData) throws IOException;
 }

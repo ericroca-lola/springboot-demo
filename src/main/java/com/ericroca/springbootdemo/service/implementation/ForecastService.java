@@ -64,22 +64,18 @@ public class ForecastService implements IForecastService {
     }
 
     @Override
-    public List<String> parseDate(String jsonData) {
+    public List<String> parseDate(String jsonData) throws IOException {
         List<String> dateTime = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-        try {
-            Response response = mapper.readValue(jsonData, Response.class);
-            List<ListElement> listElements = response.getList();
-            LocalDateTime start = listElements.get(0).getDtTxt();
-            LocalDateTime end = listElements.get(response.getCnt() - 1).getDtTxt();
-            dateTime.add(start.toLocalDate().toString());
-            dateTime.add(start.toLocalTime().toString());
-            dateTime.add(end.toLocalDate().toString());
-            dateTime.add(end.toLocalTime().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Response response = mapper.readValue(jsonData, Response.class);
+        List<ListElement> listElements = response.getList();
+        LocalDateTime start = listElements.get(0).getDtTxt();
+        LocalDateTime end = listElements.get(response.getCnt() - 1).getDtTxt();
+        dateTime.add(start.toLocalDate().toString());
+        dateTime.add(start.toLocalTime().toString());
+        dateTime.add(end.toLocalDate().toString());
+        dateTime.add(end.toLocalTime().toString());
         return dateTime;
     }
 }
